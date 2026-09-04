@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 780" width="100%" height="100%">
+  <defs>
+    <linearGradient id="docBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <filter id="docShadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="600" height="780" fill="#f1f5f9"/>
+
+  <!-- Document Paper (A4 proportions) -->
+  <g transform="translate(45, 25)" filter="url(#docShadow)">
+    <rect width="510" height="730" rx="4" fill="url(#docBg)" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Top Indonesian Red & White Header Bar -->
+    <rect x="0" y="0" width="510" height="6" rx="4" fill="#dc2626"/>
+
+    <!-- Watermark Logo -->
+    <g transform="translate(255, 380)" opacity="0.04">
+      <circle cx="0" cy="0" r="140" fill="#047857"/>
+      <path d="M -80,-50 L 0,-110 L 80,-50 L 80,70 L 0,110 L -80,70 Z" fill="#0f172a"/>
+    </g>
+
+    <!-- Header / Kop Surat -->
+    <g transform="translate(30, 25)">
+      <!-- SI ASPRI Shield Logo -->
+      <rect x="0" y="5" width="46" height="52" rx="6" fill="#047857"/>
+      <path d="M 10,18 L 23,10 L 36,18 L 36,36 C 36,44 23,50 23,50 C 23,50 10,44 10,36 Z" fill="#ffffff"/>
+      <path d="M 18,28 L 22,32 L 29,22" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <text x="60" y="20" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="900" letter-spacing="1">SI ASPRI INDONESIA</text>
+      <text x="60" y="34" fill="#1e293b" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="bold" letter-spacing="0.5">SISTEM INFORMASI ASOSIASI PENERBIT INDONESIA</text>
+      <text x="60" y="47" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="7.5">Mitra Resmi Verifikasi Dokumen Pengadaan Kemdikdasmen RI - SIPLah</text>
+      <text x="60" y="58" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="7.5" font-weight="bold">Portal Verifikasi Daring: https://siaspri.id</text>
+
+      <!-- Horizontal Divider -->
+      <line x1="0" y1="72" x2="450" y2="72" stroke="#047857" stroke-width="2"/>
+      <line x1="0" y1="75" x2="450" y2="75" stroke="#047857" stroke-width="0.75"/>
+    </g>
+
+    <!-- Document Title -->
+    <g transform="translate(255, 125)" text-anchor="middle">
+      <text y="0" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="bold" letter-spacing="1">SURAT DUKUNGAN PENERBIT RESMI</text>
+      <text y="14" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" letter-spacing="0.5">PROGRAM BANTUAN PEMERINTAH (BANPEM) KEMDIKDASMEN 2026</text>
+      <text y="28" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="bold">NOMOR: 882/ASPRI/BANPEM/2026</text>
+    </g>
+
+    <!-- Preamble text -->
+    <g transform="translate(40, 180)" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" fill="#334155">
+      <text x="0" y="0">Dengan ini Asosiasi Penerbit Indonesia (SI ASPRI) menerangkan bahwa:</text>
+    </g>
+
+    <!-- Table Details Box -->
+    <g transform="translate(40, 195)">
+      <rect width="430" height="155" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+
+      <!-- Row 1: Nama Penerbit -->
+      <rect x="0" y="0" width="430" height="31" fill="#f1f5f9" rx="6 6 0 0"/>
+      <text x="14" y="20" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold">Nama Penerbit</text>
+      <text x="140" y="20" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold">: PT PENERBIT PUSTAKA MENULIS SD</text>
+
+      <!-- Row 2: NIB / SIUP -->
+      <text x="14" y="50" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5">ID Anggota / NIB</text>
+      <text x="140" y="50" fill="#1e293b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5">: ASPRI-ID-2026-9921 / 022010887192</text>
+      <line x1="10" y1="62" x2="420" y2="62" stroke="#e2e8f0" stroke-width="0.75"/>
+
+      <!-- Row 3: Judul Produk Komoditas -->
+      <text x="14" y="80" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold">Judul Buku / Produk</text>
+      <text x="140" y="80" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold">: BUKU PANDUAN MENULIS KATEGORI BANPEM 2026</text>
+      <line x1="10" y1="92" x2="420" y2="92" stroke="#e2e8f0" stroke-width="0.75"/>
+
+      <!-- Row 4: Kategori Dana -->
+      <text x="14" y="110" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5">Kategori / Sumber Dana</text>
+      <text x="140" y="110" fill="#1e293b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5">: Bantuan Pemerintah (Banpem) Literasi Menulis 2026</text>
+      <line x1="10" y1="122" x2="420" y2="122" stroke="#e2e8f0" stroke-width="0.75"/>
+
+      <!-- Row 5: Status Keabsahan -->
+      <text x="14" y="140" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8.5">Status Validasi</text>
+      <text x="140" y="140" fill="#059669" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold">: SAH &amp; MEMENUHI SPESIFIKASI TEKNIS KEMDIKDASMEN</text>
+    </g>
+
+    <!-- Declaration text -->
+    <g transform="translate(40, 370)" font-family="system-ui, -apple-system, sans-serif" font-size="8.2" fill="#334155">
+      <text x="0" y="0">Surat Dukungan ini menyatakan bahwa penerbit tersebut di atas menjamin ketersediaan pasokan,</text>
+      <text x="0" y="14">keaslian hak cipta, kepatuhan kurikulum, serta garansi purnajual atas buku yang diadakan oleh satuan</text>
+      <text x="0" y="28">pendidikan penerima Bantuan Pemerintah (Banpem) melalui Sistem Informasi Pengadaan Sekolah (SIPLah).</text>
+    </g>
+
+    <!-- Verification Link Box (Mandatory Active Verification) -->
+    <g transform="translate(40, 430)">
+      <rect width="430" height="74" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+      
+      <!-- Shield checkmark icon -->
+      <circle cx="36" cy="37" r="18" fill="#10b981"/>
+      <path d="M 28,37 L 33,42 L 44,31" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <text x="68" y="25" fill="#065f46" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="bold">DOKUMEN TERVERIFIKASI RESMI DI SI ASPRI</text>
+      <text x="68" y="40" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="8">Tautan Akses Keabsahan Digital Satuan Pendidikan &amp; Pengawas:</text>
+      <text x="68" y="58" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="bold" text-decoration="underline">https://siaspri.id/verify/doc-12345</text>
+      
+      <!-- Security token badge -->
+      <rect x="330" y="26" width="85" height="22" rx="4" fill="#047857"/>
+      <text x="372" y="40" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="bold" text-anchor="middle">KODE: doc-12345</text>
+    </g>
+
+    <!-- Digital Signatures & QR Code Section -->
+    <g transform="translate(40, 525)">
+      
+      <!-- Left: QR Code Mockup -->
+      <g transform="translate(10, 10)">
+        <rect width="84" height="84" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" rx="4"/>
+        <!-- QR Code pattern -->
+        <rect x="8" y="8" width="22" height="22" fill="#047857"/>
+        <rect x="12" y="12" width="14" height="14" fill="#ffffff"/>
+        <rect x="15" y="15" width="8" height="8" fill="#047857"/>
+
+        <rect x="54" y="8" width="22" height="22" fill="#047857"/>
+        <rect x="58" y="12" width="14" height="14" fill="#ffffff"/>
+        <rect x="61" y="15" width="8" height="8" fill="#047857"/>
+
+        <rect x="8" y="54" width="22" height="22" fill="#047857"/>
+        <rect x="12" y="58" width="14" height="14" fill="#ffffff"/>
+        <rect x="15" y="61" width="8" height="8" fill="#047857"/>
+
+        <!-- Bits -->
+        <rect x="34" y="12" width="5" height="5" fill="#047857"/>
+        <rect x="42" y="18" width="6" height="6" fill="#047857"/>
+        <rect x="36" y="36" width="12" height="12" fill="#047857"/>
+        <rect x="56" y="42" width="8" height="8" fill="#047857"/>
+        <rect x="40" y="58" width="6" height="6" fill="#047857"/>
+        <rect x="52" y="66" width="10" height="5" fill="#047857"/>
+        <rect x="68" y="58" width="8" height="8" fill="#047857"/>
+
+        <text x="42" y="102" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="7.5" text-anchor="middle">Pindai Verifikasi</text>
+      </g>
+
+      <!-- Center: Official ASPRI Round Stamp -->
+      <g transform="translate(195, 48)">
+        <circle cx="0" cy="0" r="42" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="4, 2"/>
+        <circle cx="0" cy="0" r="38" fill="none" stroke="#059669" stroke-width="1"/>
+        <circle cx="0" cy="0" r="28" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+        <text x="0" y="-8" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="6.5" font-weight="bold" text-anchor="middle">ASOSIASI PENERBIT</text>
+        <text x="0" y="2" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="7.5" font-weight="900" text-anchor="middle">SI ASPRI</text>
+        <text x="0" y="11" fill="#059669" font-family="system-ui, -apple-system, sans-serif" font-size="6" font-weight="bold" text-anchor="middle">TERVALIDASI 2026</text>
+      </g>
+
+      <!-- Right: Digital Signature -->
+      <g transform="translate(300, 10)" text-anchor="center">
+        <text x="65" y="14" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="8">Jakarta, 12 Januari 2026</text>
+        <text x="65" y="26" fill="#1e293b" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="bold">Komite Verifikasi SI ASPRI</text>
+        
+        <!-- Tanda Tangan Elektronik Visual -->
+        <rect x="10" y="34" width="110" height="36" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="3, 2"/>
+        <text x="65" y="48" fill="#047857" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="bold" text-anchor="middle">SIGNED DIGITALLY</text>
+        <text x="65" y="58" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="6" text-anchor="middle">BSrE / Kemdikdasmen</text>
+
+        <text x="65" y="85" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="bold" text-anchor="middle">Drs. H. Ahmad Fauzi, M.Ed.</text>
+        <text x="65" y="96" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="7.5" text-anchor="middle">Ketua Pokja Pengadaan Bahan Ajar</text>
+      </g>
+    </g>
+
+    <!-- Footer Bar -->
+    <g transform="translate(30, 695)">
+      <line x1="0" y1="0" x2="450" y2="0" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="0" y="16" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="7">Keaslian dokumen ini diatur dalam petunjuk teknis BANPEM Kemdikdasmen RI 2026.</text>
+      <text x="450" y="16" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="7" text-anchor="end">Halaman 1 dari 1</text>
+    </g>
+  </g>
+</svg>

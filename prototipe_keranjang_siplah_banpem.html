@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipe SIPLah - Fitur Banpem & Multi-PO Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .lightbox-backdrop {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+
+        /* SIPLah Telkom Header Styles */
+        header.siplah-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 40px;
+            width: 100%;
+            font-family: 'Open Sans', sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+
+        header.siplah-header * {
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* Baris Atas: Logo, Search, Notifikasi, Profile */
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 12px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 36px 8px 12px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            color: #333333;
+            background-color: #ffffff;
+        }
+
+        .search-input::placeholder {
+            color: #888888;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #e0241b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            transition: opacity 0.15s ease;
+        }
+
+        .search-btn:hover {
+            opacity: 0.8;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon-badge {
+            position: relative;
+            cursor: pointer;
+            color: #555555;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s ease;
+        }
+
+        .icon-badge:hover {
+            color: #e0241b;
+        }
+
+        .header-actions .badge,
+        .icon-badge .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e0241b;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 50%;
+            padding: 2px 5px;
+            min-width: 16px;
+            text-align: center;
+            line-height: normal;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background-color: #cccccc;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            color: #333333;
+        }
+
+        .user-name {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: #666666;
+        }
+
+        .caret-icon {
+            color: #666666;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        /* Quick Keywords Row */
+        .quick-keywords {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: #666666;
+            margin-left: 175px;
+            margin-top: -8px;
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .quick-keywords a {
+            color: #666666;
+            text-decoration: none;
+        }
+
+        .quick-keywords a:hover {
+            color: #e0241b;
+        }
+
+        /* Baris Bawah: Navigasi Menu & Logo Mitra */
+        .header-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            font-size: 13px;
+            color: #333333;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: #e0241b;
+        }
+
+        .nav-item i,
+        .nav-item svg {
+            color: #666666;
+            flex-shrink: 0;
+            transition: color 0.15s ease;
+        }
+
+        .nav-item:hover i,
+        .nav-item:hover svg {
+            color: #e0241b;
+        }
+
+        .partner-logos {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .partner-logo {
+            height: 22px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
+
+        <!-- Header / Navbar (SIPLah Telkom) -->
+    <header class="siplah-header">
+        <!-- Top Header -->
+        <div class="header-top">
+            <div class="logo-container">
+                <img src="siplah-logo.svg" alt="SIPLah Telkom" class="logo-img">
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari produk/toko...">
+                <button class="search-btn" title="Cari" aria-label="Cari">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="icon-badge" title="Notifikasi">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="badge">446</span>
+                </div>
+                <div class="icon-badge" title="Keranjang Belanja">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="badge">4</span>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">K</div>
+                    <div class="user-info">
+                        <span class="user-name">Kepsek Test</span>
+                        <span class="user-role">PLT Kepala Sekolah</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down caret-icon"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Keywords -->
+        <div class="quick-keywords">
+            <a href="#">Kemendikbud</a>
+            <a href="#">Laptop</a>
+            <a href="#">Printer</a>
+            <a href="#">Kertas</a>
+            <a href="#">Buku</a>
+            <a href="#">Lemari</a>
+            <a href="#">Speaker</a>
+            <a href="#">Proyektor</a>
+            <a href="#">Kurikulum Merdeka</a>
+            <a href="#">Spanduk</a>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="header-bottom">
+            <ul class="nav-menu">
+                <li>
+                    <a href="#" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                        Barang
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Jasa
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                    </a>
+                </li>
+                <li><a href="#" class="nav-item">Transaksi</a></li>
+                <li><a href="#" class="nav-item">Negosiasi</a></li>
+                <li><a href="#" class="nav-item">Komplain</a></li>
+                <li><a href="#" class="nav-item">Dashboard</a></li>
+            </ul>
+
+            <ul class="nav-menu">
+                <li>
+                    <a href="#" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-more"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+                        Chat
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        Bantuan & Dukungan
+                    </a>
+                </li>
+                <li class="partner-logos">
+                    <img src="logo-danantara.svg" alt="Danantara" class="partner-logo">
+                    <img src="logo-siplah-kemdikbud.svg" alt="SIPLah Kemdikbud" class="partner-logo">
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-6">
+
+        <!-- Navigation Tabs for Testing Options -->
+        <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-wrap gap-2 text-sm font-medium">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 px-3 py-2 flex items-center">Mode Demo Prototipe:</span>
+            <button onclick="switchTab('cart')" id="tab-cart" class="px-4 py-2 rounded-lg bg-blue-600 text-white transition-all shadow-sm">
+                <i class="fa-solid fa-cart-shopping mr-2"></i>1. Partial Checkout Cart
+            </button>
+            <button onclick="switchTab('filter')" id="tab-filter" class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
+                <i class="fa-solid fa-filter mr-2"></i>2. Filter Quick Action Cart
+            </button>
+            <button onclick="switchTab('pdp')" id="tab-pdp" class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
+                <i class="fa-solid fa-book-open mr-2"></i>3. Detail Produk PDP (Buku Banpem &amp; SI ASPRI)</button>
+        </div>
+
+        <!-- ==================== TAB 1: PARTIAL CHECKOUT CART ==================== -->
+        <div id="view-cart" class="space-y-4">
+            
+            <!-- Context Banner -->
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl shadow-sm flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-blue-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-blue-600"></i> DUKUNGAN PARTIAL CHECKOUT (Opsi 1)
+                    </h3>
+                    <p class="text-xs text-blue-800 mt-1">
+                        Sistem mendeteksi PO Banpem dan Non-Banpem secara terpisah. Karena aturan HPP Kemdikdasmen hanya memperbolehkan <strong>1 Sumber Dana per checkout</strong>, centang secara terpisah PO Banpem saja atau PO Non-Banpem saja.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Cart Items List (2/3 width) -->
+                <div class="lg:col-span-2 space-y-4">
+                    
+                    <!-- Select All Checkbox Card -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="select-all" onchange="toggleSelectAll(this)" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="font-semibold text-slate-700 text-sm">Pilih Semua Pesanan (PO)</span>
+                        </label>
+                        <span class="text-xs text-slate-500">2 Toko / PO Terdaftar</span>
+                    </div>
+
+                    <!-- PO 1: TOKO BANPEM -->
+                    <div class="bg-white rounded-xl shadow-sm border border-emerald-200 overflow-hidden transition-all hover:shadow-md">
+                        <div class="bg-emerald-50/60 p-4 border-b border-emerald-100 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" class="po-checkbox w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500" data-type="banpem" data-price="1250000" onchange="validateSelections()">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-store text-emerald-700"></i>
+                                    <span class="font-bold text-slate-800 text-sm">Penerbit Pustaka Menulis SD</span>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 font-medium text-xs px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+                                <i class="fa-solid fa-certificate"></i> Kategori Banpem Menulis
+                            </span>
+                        </div>
+                        
+                        <div class="p-4 space-y-3">
+                            <div class="flex gap-4 items-start pb-3 border-b border-slate-100">
+                                <div class="w-16 h-16 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center text-slate-400 border">
+                                    <i class="fa-solid fa-book-open text-2xl text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-slate-800 text-sm">Paket Seri Modul Menulis & Literasi Dasar SD 2026</h4>
+                                    <p class="text-xs text-slate-500 mt-0.5">Dikbud Cat ID: 2745</p>
+                                    <div class="mt-2 flex justify-between items-center">
+                                        <span class="text-xs text-slate-600">1 Paket x <strong class="text-slate-800">Rp1.250.000</strong></span>
+                                        <span class="font-bold text-slate-900 text-sm">Rp1.250.000</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-amber-50 rounded-lg p-2.5 text-xs text-amber-800 border border-amber-200/60 flex items-start gap-2">
+                                <i class="fa-solid fa-building-columns text-amber-600 mt-0.5"></i>
+                                <div>
+                                    <strong>Metode Pembayaran Khusus Banpem:</strong>
+                                    <p class="text-amber-700">Pesanan ini wajib menggunakan opsi pembayaran <strong>Bank Syariah Indonesia (BSI)</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PO 2: TOKO NON-BANPEM -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition-all hover:shadow-md">
+                        <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" class="po-checkbox w-5 h-5 text-blue-600 rounded focus:ring-blue-500" data-type="non-banpem" data-price="450000" onchange="validateSelections()">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-store text-slate-600"></i>
+                                    <span class="font-bold text-slate-800 text-sm">Toko Alat Tulis Sarana Edukasi</span>
+                                </div>
+                            </div>
+                            <span class="bg-slate-100 text-slate-600 font-medium text-xs px-2.5 py-1 rounded-full border border-slate-200">
+                                Regular / Non-Banpem
+                            </span>
+                        </div>
+                        
+                        <div class="p-4 space-y-3">
+                            <div class="flex gap-4 items-start pb-3 border-b border-slate-100">
+                                <div class="w-16 h-16 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center text-slate-400 border">
+                                    <i class="fa-solid fa-boxes-packing text-2xl text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-slate-800 text-sm">Kertas HVS A4 80gr Sidu (1 Dus / 5 Rim)</h4>
+                                    <p class="text-xs text-slate-500 mt-0.5">Kategori: Alat Tulis Kantor</p>
+                                    <div class="mt-2 flex justify-between items-center">
+                                        <span class="text-xs text-slate-600">1 Dus x <strong class="text-slate-800">Rp450.000</strong></span>
+                                        <span class="font-bold text-slate-900 text-sm">Rp450.000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Checkout Summary Card (1/3 width) -->
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 sticky top-20">
+                        <h3 class="font-bold text-slate-800 border-b pb-3 text-sm flex items-center justify-between">
+                            <span>Ringkasan Belanja</span>
+                            <span id="selected-count-badge" class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">0 PO Terpilih</span>
+                        </h3>
+
+                        <!-- Conflict Alert Message -->
+                        <div id="conflict-alert" class="hidden my-3 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 space-y-1">
+                            <div class="font-bold flex items-center gap-1 text-red-800">
+                                <i class="fa-solid fa-triangle-exclamation text-red-600"></i> Sumber Dana Tidak Boleh Dicampur!
+                            </div>
+                            <p>Kemdikdasmen mengharuskan PO Banpem dan PO Regular dicheckout secara terpisah karena perbedaan Sumber Dana di HPP.</p>
+                        </div>
+
+                        <div class="space-y-2 my-4 text-xs">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Total Harga Barang</span>
+                                <span id="summary-subtotal" class="font-semibold text-slate-800">Rp0</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Estimasi Ongkos Kirim</span>
+                                <span class="text-slate-400">Dihitung saat checkout</span>
+                            </div>
+                            <div class="border-t pt-2 mt-2 flex justify-between text-sm font-bold text-slate-900">
+                                <span>Total Tagihan</span>
+                                <span id="summary-total" class="text-blue-900">Rp0</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-checkout" disabled onclick="handleCheckoutProcess()" class="w-full py-3 bg-slate-300 text-slate-500 font-bold rounded-lg text-sm transition-all cursor-not-allowed flex justify-center items-center gap-2 shadow-sm">
+                            <span>Lanjutkan ke Checkout</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: FILTER & QUICK ACTION TOOL ==================== -->
+        <div id="view-filter" class="hidden space-y-4">
+            
+            <!-- Quick Action Alert Box -->
+            <div class="bg-amber-50 border border-amber-300 p-4 rounded-xl shadow-sm space-y-3">
+                <div class="flex items-start gap-3">
+                    <div class="bg-amber-100 text-amber-700 p-2 rounded-lg text-lg">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-amber-900 text-sm">Terdeteksi Kombinasi Barang Banpem & Non-Banpem Dalam Cart</h3>
+                        <p class="text-xs text-amber-800 mt-1">
+                            Aplikasi HPP Kemdikdasmen hanya mendukung 1 jenis Sumber Dana per transaksi. Anda tidak dapat melakukan transaksi sekaligus jika terdapat campuran produk Banpem dan Non-Banpem.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="pt-2 border-t border-amber-200/60 flex flex-wrap gap-2 justify-end">
+                    <button onclick="cleanCart('non-banpem')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-broom"></i> Hapus Semua Non-Banpem (Proses Banpem Saja)
+                    </button>
+                    <button onclick="cleanCart('banpem')" class="px-3 py-1.5 bg-slate-700 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-trash-can"></i> Hapus Semua Banpem (Proses Regular)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item List for Demo Filter -->
+            <div id="filter-item-container" class="bg-white rounded-xl border p-4 shadow-sm space-y-3">
+                <h4 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">Item dalam Keranjang</h4>
+                
+                <div id="filter-item-1" class="flex justify-between items-center p-3 border rounded-lg bg-emerald-50/30 border-emerald-200">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">Banpem</span>
+                        <span class="text-sm font-semibold text-slate-800">Paket Modul Menulis SD (Dikbud ID: 2745)</span>
+                    </div>
+                    <button onclick="removeItem('filter-item-1')" class="text-xs text-red-500 hover:text-red-700 font-medium">Hapus</button>
+                </div>
+
+                <div id="filter-item-2" class="flex justify-between items-center p-3 border rounded-lg bg-slate-50 border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded font-bold">Non-Banpem</span>
+                        <span class="text-sm font-semibold text-slate-800">Kertas HVS A4 80gr Sidu</span>
+                    </div>
+                    <button onclick="removeItem('filter-item-2')" class="text-xs text-red-500 hover:text-red-700 font-medium">Hapus</button>
+                </div>
+            </div>
+
+        </div>
+
+                <!-- ==================== TAB 3: PRODUCT DETAIL PAGE (PDP) ==================== -->
+        <div id="view-pdp" class="hidden">
+            <div class="bg-white rounded-lg border border-slate-200 p-6 md:p-8 shadow-sm">
+                
+                <!-- TOP SECTION: Product Image + Details + Merchant Card -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Left: Gallery / Images -->
+                    <div class="lg:col-span-4 flex flex-col items-start w-full">
+                        <!-- Section Header -->
+                        <div class="flex items-center justify-between w-full mb-2.5">
+                            <span class="text-xs font-bold text-slate-700 tracking-wide uppercase flex items-center gap-1.5">
+                                <i class="fa-regular fa-images text-blue-600"></i> Galeri Foto Produk
+                            </span>
+                            <span class="text-[11px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <i class="fa-solid fa-shield-check"></i> Terverifikasi SI ASPRI
+                            </span>
+                        </div>
+
+                        <!-- Main Product Image Box -->
+                        <div class="w-full aspect-square border border-[#e5e7eb] rounded-lg p-2.5 flex items-center justify-center bg-white relative group overflow-hidden shadow-sm">
+                            <img id="pdp-main-img" src="buku_panduan_menulis_banpem.svg" alt="Buku Panduan Menulis Kategori Banpem 2026" class="max-w-full max-h-full object-contain transition-transform duration-200 group-hover:scale-[1.02]">
+                            <!-- Hover zoom prompt -->
+                            <div class="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer" onclick="handleMainImageClick()">
+                                <span class="bg-white/95 text-slate-800 text-xs font-bold px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-emerald-600"></i> Klik untuk Perbesar
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 2-Card Gallery matching User ASCII Diagram:
+                             [Galeri Foto Produk]
+                             +-------------------+  +-------------------+
+                             |  Foto Produk 1    |  |  Surat Dukungan   | 🔍 (Klik untuk Popup / Lightbox)
+                             +-------------------+  +-------------------+
+                        -->
+                        <div class="mt-3.5 w-full">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1.5 flex items-center justify-between">
+                                <span>Pilihan Gambar:</span>
+                                <span class="text-[10px] text-emerald-700 font-medium">Klik untuk ganti / popup</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                                
+                                <!-- Card 1: Foto Produk 1 -->
+                                <div id="thumb-prod-1" onclick="selectPdpImage('prod1')" class="border-2 border-[#e02020] rounded-lg p-2 bg-white cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center">
+                                    <div class="w-full aspect-square bg-slate-50 rounded p-1 flex items-center justify-center overflow-hidden mb-1.5 border border-slate-100">
+                                        <img src="buku_panduan_menulis_banpem.svg" alt="Foto Produk 1" class="max-w-full max-h-full object-contain">
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-800 leading-tight">Foto Produk 1</span>
+                                    <span class="text-[10px] text-slate-500 mt-0.5">Cover Utama</span>
+                                </div>
+
+                                <!-- Card 2: Surat Dukungan (Klik untuk Popup / Lightbox) -->
+                                <div id="thumb-prod-2" onclick="openLightbox()" class="border-2 border-slate-200 hover:border-emerald-500 rounded-lg p-2 bg-emerald-50/50 cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center relative group">
+                                    <div class="w-full aspect-square bg-white rounded p-1 flex items-center justify-center overflow-hidden mb-1.5 border border-emerald-200 relative">
+                                        <img src="surat_dukungan_siaspri.svg" alt="Surat Dukungan Penerbit" class="max-w-full max-h-full object-contain">
+                                        <div class="absolute inset-0 bg-emerald-900/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                            <i class="fa-solid fa-magnifying-glass text-emerald-800 text-lg"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-bold text-emerald-800 leading-tight flex items-center gap-1">
+                                        Surat Dukungan
+                                    </span>
+                                    <span class="text-[10px] text-emerald-700 font-semibold mt-0.5 flex items-center justify-center gap-0.5">
+                                        🔍 (Klik untuk Popup / Lightbox)
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Center: Product Specifications & Actions -->
+                    <div class="lg:col-span-5 flex flex-col justify-start">
+                        
+                        <!-- Badges -->
+                        <div class="flex items-center gap-2 flex-wrap mb-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                                <i class="fa-solid fa-certificate"></i> Kategori Banpem 2026
+                            </span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200 flex items-center gap-1">
+                                <i class="fa-solid fa-file-circle-check"></i> Terverifikasi SI ASPRI
+                            </span>
+                        </div>
+
+                        <h1 class="text-2xl font-bold text-[#1f2937] mb-3 leading-snug">
+                            Buku Panduan Menulis Kategori Banpem 2026
+                        </h1>
+
+                        <!-- Detail rows -->
+                        <div class="space-y-3.5 text-sm">
+                            
+                            <!-- Row: Harga -->
+                            <div class="flex items-baseline">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Harga</span>
+                                <div class="flex items-baseline gap-1.5 flex-wrap">
+                                    <span class="text-[#e02020] font-bold text-2xl leading-none">Rp125.000</span>
+                                    <span class="text-xs text-[#6b7280]">/ Eks (Harga Termasuk Pajak)</span>
+                                    <i class="fa-solid fa-circle-info text-[#9ca3af] text-xs cursor-pointer" title="Harga Termasuk Pajak - Bebas PPN Buku Pendidikan"></i>
+                                    <span class="text-xs text-[#374151]">Zona 1</span>
+                                </div>
+                            </div>
+
+                            <!-- Row: Jumlah -->
+                            <div class="flex items-center">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Jumlah</span>
+                                <div class="flex items-center gap-4 flex-wrap">
+                                    <!-- Stepper Input -->
+                                    <div class="relative inline-flex items-center border border-[#d1d5db] rounded-[3px] bg-white h-[32px] w-[150px]">
+                                        <input type="number" id="pdp-quantity-input" value="1" min="1" max="10000" class="w-full h-full pl-3 pr-7 text-sm text-[#1f2937] outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" oninput="calculatePdpTotal(this.value)">
+                                        <div class="absolute right-0 top-0 bottom-0 w-6 flex flex-col border-l border-[#e5e7eb] divide-y divide-[#e5e7eb]">
+                                            <button type="button" onclick="stepPdpQty(1)" class="flex-1 flex items-center justify-center bg-white hover:bg-slate-100 text-[#6b7280] text-[8px] leading-none transition-colors">
+                                                <i class="fa-solid fa-caret-up"></i>
+                                            </button>
+                                            <button type="button" onclick="stepPdpQty(-1)" class="flex-1 flex items-center justify-center bg-white hover:bg-slate-100 text-[#6b7280] text-[8px] leading-none transition-colors">
+                                                <i class="fa-solid fa-caret-down"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-[#1f2937]">
+                                        Total: <span id="pdp-total-price" class="font-bold text-[#1f2937]">Rp125.000</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row: Stok -->
+                            <div class="flex items-center">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Stok</span>
+                                <span class="text-sm text-[#1f2937]">10000 Eks (Ready Stock)</span>
+                            </div>
+
+                            <!-- Row: Estimasi Pengiriman -->
+                            <div class="flex items-center">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Estimasi Pengiriman</span>
+                                <span class="text-sm text-[#1f2937]">2 - 4 Hari Kerja</span>
+                            </div>
+
+                            <!-- Row: Jasa Pengiriman -->
+                            <div class="flex items-center">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Jasa Pengiriman</span>
+                                <span class="text-sm text-[#1f2937]">Kurir Rekanan SIPLah / Ekspedisi Resmi</span>
+                            </div>
+
+                            <!-- Row: Surat Dukungan SI ASPRI -->
+                            <div class="flex items-center">
+                                <span class="w-36 flex-shrink-0 font-bold text-[#1f2937]">Surat Dukungan</span>
+                                <button type="button" onclick="openLightbox()" class="text-xs text-emerald-700 font-bold hover:underline inline-flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200 shadow-xs">
+                                    <i class="fa-solid fa-file-circle-check"></i> Cek Verifikasi SI ASPRI: doc-12345 🔍
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Button: Tambah ke keranjang -->
+                        <div class="flex items-center pt-4">
+                            <div class="w-36 flex-shrink-0 hidden sm:block"></div>
+                            <button type="button" onclick="simulatedAddToCart('banpem')" class="w-full sm:w-[280px] py-2.5 px-4 bg-[#e02020] hover:bg-[#c91818] text-white font-bold rounded text-sm transition-colors shadow-none text-center">
+                                Tambah ke keranjang
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Merchant Card -->
+                    <div class="lg:col-span-3">
+                        <div class="border border-[#e5e7eb] rounded-md p-5 bg-white text-center">
+                            <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-2 text-xl">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+                            <h3 class="font-bold text-[#1f2937] text-sm leading-snug">Penerbit Pustaka Menulis SD</h3>
+                            
+                            <div class="flex items-center justify-center gap-1.5 text-xs text-[#6b7280] mt-1.5 mb-2">
+                                <i class="fa-solid fa-location-dot text-[#6b7280] text-xs"></i>
+                                <span>Kota Jakarta Barat</span>
+                            </div>
+
+                            <div class="flex items-center justify-center gap-3 text-xs text-[#374151] font-medium mb-3">
+                                <span class="inline-flex items-center gap-1">
+                                    <i class="fa-regular fa-building text-[#6b7280]"></i> PT
+                                </span>
+                                <span class="inline-flex items-center gap-1">
+                                    <i class="fa-regular fa-file-lines text-[#6b7280]"></i> PKP
+                                </span>
+                                <span class="inline-flex items-center gap-1 text-emerald-700 font-semibold">
+                                    <i class="fa-solid fa-shield-check text-emerald-600"></i> IKAPI
+                                </span>
+                            </div>
+
+                            <!-- Dotted divider -->
+                            <div class="border-t border-dotted border-[#d1d5db] my-3"></div>
+
+                            <div class="text-xs text-[#6b7280] mb-1">Dokumen pendukung</div>
+                            <div class="text-xs text-[#374151] leading-relaxed">
+                                KTP Direksi, SIUP, NPWP, NIB,<br>
+                                <strong class="text-emerald-700 cursor-pointer hover:underline" onclick="openLightbox()">Surat Dukungan SI ASPRI</strong>
+                            </div>
+
+                            <div class="mt-3 pt-3 border-t border-slate-100">
+                                <button type="button" onclick="openLightbox()" class="w-full py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 rounded text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                                    <i class="fa-solid fa-magnifying-glass"></i> Cek Surat Dukungan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Dotted divider full width -->
+                <div class="border-t border-dotted border-[#cbd5e1] my-8"></div>
+
+                <!-- BOTTOM SECTION: Informasi Produk & Deskripsi -->
+                <div class="space-y-6">
+                    
+                    <!-- Informasi Produk -->
+                    <div>
+                        <h2 class="font-bold text-[#1f2937] text-sm mb-3">Informasi Produk</h2>
+                        <table class="text-xs text-[#374151] leading-relaxed border-collapse">
+                            <tbody>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal w-40">Gratis Ongkir</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Ya</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">SKU</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">BPM-BANPEM-2026-SD</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Kategori</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal">
+                                        <a href="#" class="text-[#2563eb] hover:underline">Buku / Kategori Banpem Menulis</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Status Pajak</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Bebas PPN (Buku Pendidikan PP No. 49/2022)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Kondisi</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Baru (Cetakan Resmi 2026)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Garansi</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Garansi Penerbit Resmi - Penggantian Buku Cacat</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Dimensi</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">21 x 29.7 cm (A4), 168 Halaman</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Brand / Penerbit</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Penerbit Pustaka Menulis SD</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Berat</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">350 Gram</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Minimal pembelian</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">1 Eks</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Surat Dukungan SI ASPRI</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-emerald-700 font-semibold">
+                                        No. 882/ASPRI/BANPEM/2026 (doc-12345)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Ketersediaan Produk</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Ready Stock</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pr-8 text-[#4b5563] font-normal">Tipe Produk</td>
+                                    <td class="py-1 px-1 text-[#4b5563]">:</td>
+                                    <td class="py-1 pl-2 font-normal text-[#1f2937]">Buku Pelajaran &amp; Literasi - Banpem Kemdikdasmen</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Dotted divider -->
+                    <div class="border-t border-dotted border-[#cbd5e1] my-5"></div>
+
+                    <!-- Deskripsi Produk -->
+                    <div>
+                        <h2 class="font-bold text-[#1f2937] text-sm mb-3">Deskripsi Produk</h2>
+                        <div class="space-y-3.5 text-xs text-[#374151] leading-relaxed">
+                            
+                            <!-- Prompt Requirement:
+                                 Deskripsi Produk:
+                                 Buku Panduan Menulis Kategori Banpem 2026. 
+                                 Dokumen Verifikasi Resmi: https://siaspri.id/verify/doc-12345 👈 (Hyperlink Aktif)
+                            -->
+                            <p class="font-bold text-sm text-[#1f2937]">
+                                Buku Panduan Menulis Kategori Banpem 2026.
+                            </p>
+
+                            <!-- Verification Link Box (Hyperlink Aktif) -->
+                            <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 text-base shadow-sm">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-600 font-medium">Dokumen Verifikasi Resmi:</div>
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <a href="https://siaspri.id/verify/doc-12345" target="_blank" rel="noopener noreferrer" class="text-emerald-700 hover:text-emerald-900 font-bold text-xs underline underline-offset-2 flex items-center gap-1 transition-colors">
+                                                https://siaspri.id/verify/doc-12345
+                                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                            </a>
+                                            <span class="text-[11px] text-emerald-800 font-medium">👈 (Hyperlink Aktif)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="openLightbox()" class="px-3 py-1.5 bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-100 rounded text-xs font-semibold inline-flex items-center gap-1.5 shadow-sm transition-all">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Lihat Surat Dukungan
+                                    </button>
+                                    <a href="https://siaspri.id/verify/doc-12345" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold inline-flex items-center gap-1.5 shadow-sm transition-all">
+                                        Verifikasi di SI ASPRI <i class="fa-solid fa-external-link text-[10px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <p>
+                                Buku Panduan Menulis Kategori Banpem 2026 disusun untuk mendukung pemenuhan petunjuk teknis pengadaan sarana literasi dan modul pembelajaran program Bantuan Pemerintah (Banpem) Kemdikdasmen tahun anggaran 2026.
+                            </p>
+                            <p>
+                                <strong>Keunggulan &amp; Kepatuhan Regulasi:</strong>
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                                <li>Memenuhi seluruh standar teknis pengadaan buku literasi Banpem Kemdikdasmen RI.</li>
+                                <li>Surat Dukungan Penerbit telah divalidasi dan terdaftar di database SI ASPRI (Asosiasi Penerbit Indonesia).</li>
+                                <li>Dapat diverifikasi keabsahannya secara langsung melalui tautan resmi SI ASPRI atau pemindaian kode QR tertera pada Surat Dukungan.</li>
+                                <li>Hak cipta terdaftar dan garansi penggantian buku cacat produksi oleh penerbit resmi.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Lightbox Modal for Surat Dukungan Image -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 lightbox-backdrop hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="border-b pb-2 flex items-center justify-between pr-8">
+                <div>
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base">
+                        <i class="fa-solid fa-file-contract text-emerald-600"></i> Verifikasi Surat Dukungan Penerbit
+                    </h3>
+                    <p class="text-xs text-slate-500">Sistem Informasi Asosiasi Penerbit Indonesia (SI ASPRI) &bull; Kemdikdasmen</p>
+                </div>
+                <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i> DOKUMEN SAH
+                </span>
+            </div>
+
+            <!-- Mock Document Visual -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 flex items-center justify-center max-h-[500px] overflow-auto">
+                <img src="surat_dukungan_siaspri.svg" alt="Surat Dukungan Penerbit SI ASPRI" class="w-full h-auto object-contain rounded shadow-sm">
+            </div>
+
+            <!-- Verification Action Bar inside Modal -->
+            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-shield-check text-emerald-600 text-lg"></i>
+                    <div>
+                        <span class="font-bold text-slate-800 block">Dokumen Verifikasi Resmi:</span>
+                        <a href="https://siaspri.id/verify/doc-12345" target="_blank" rel="noopener noreferrer" class="text-emerald-700 hover:text-emerald-900 font-bold underline">
+                            https://siaspri.id/verify/doc-12345 👈 (Hyperlink Aktif)
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <a href="https://siaspri.id/verify/doc-12345" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition-all">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Cek di SI ASPRI
+                    </a>
+                    <button onclick="closeLightbox()" class="px-3 py-2 bg-slate-200 text-slate-700 rounded-lg text-xs font-bold hover:bg-slate-300">
+                        Tutup Preview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal for Add to Cart Prevention (Opsi 3) -->
+    <div id="add-to-cart-modal" class="fixed inset-0 z-50 lightbox-backdrop hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="font-bold text-slate-800 text-base">Gagal Menambahkan Produk</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Keranjang Anda saat ini sudah berisi <strong>Produk Non-Banpem</strong>. Ketentuan Kemdikdasmen melarang pembeli mencampur jenis Sumber Dana dalam satu transaksi checkout.
+                </p>
+            </div>
+
+            <div class="space-y-2 pt-2">
+                <button onclick="closeAddToCartModal()" class="w-full py-2.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700">
+                    Kosongkan Keranjang & Tambah Produk Ini
+                </button>
+                <button onclick="closeAddToCartModal()" class="w-full py-2 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium hover:bg-slate-200">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switcher Logic
+        function switchTab(tabName) {
+            document.getElementById('view-cart').classList.add('hidden');
+            document.getElementById('view-filter').classList.add('hidden');
+            document.getElementById('view-pdp').classList.add('hidden');
+
+            document.getElementById('tab-cart').className = "px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
+            document.getElementById('tab-filter').className = "px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
+            document.getElementById('tab-pdp').className = "px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
+
+            if (tabName === 'cart') {
+                document.getElementById('view-cart').classList.remove('hidden');
+                document.getElementById('tab-cart').className = "px-4 py-2 rounded-lg bg-blue-600 text-white transition-all shadow-sm";
+            } else if (tabName === 'filter') {
+                document.getElementById('view-filter').classList.remove('hidden');
+                document.getElementById('tab-filter').className = "px-4 py-2 rounded-lg bg-blue-600 text-white transition-all shadow-sm";
+            } else if (tabName === 'pdp') {
+                document.getElementById('view-pdp').classList.remove('hidden');
+                document.getElementById('tab-pdp').className = "px-4 py-2 rounded-lg bg-blue-600 text-white transition-all shadow-sm";
+            }
+        }
+
+        // Cart Selection Validation (Partial Checkout)
+        function validateSelections() {
+            const checkboxes = document.querySelectorAll('.po-checkbox:checked');
+            const selectAll = document.getElementById('select-all');
+            const totalPoCount = document.querySelectorAll('.po-checkbox').length;
+            const conflictAlert = document.getElementById('conflict-alert');
+            const btnCheckout = document.getElementById('btn-checkout');
+            const summarySubtotal = document.getElementById('summary-subtotal');
+            const summaryTotal = document.getElementById('summary-total');
+            const badgeCount = document.getElementById('selected-count-badge');
+
+            let hasBanpem = false;
+            let hasNonBanpem = false;
+            let totalPrice = 0;
+
+            checkboxes.forEach(cb => {
+                const type = cb.getAttribute('data-type');
+                const price = parseInt(cb.getAttribute('data-price') || '0');
+                
+                if (type === 'banpem') hasBanpem = true;
+                if (type === 'non-banpem') hasNonBanpem = true;
+                totalPrice += price;
+            });
+
+            // Update UI State
+            badgeCount.innerText = `${checkboxes.length} PO Terpilih`;
+            summarySubtotal.innerText = `Rp${totalPrice.toLocaleString('id-ID')}`;
+            summaryTotal.innerText = `Rp${totalPrice.toLocaleString('id-ID')}`;
+
+            // Check conflict rule: CANNOT mix Banpem and Non-Banpem in checkout
+            if (hasBanpem && hasNonBanpem) {
+                conflictAlert.classList.remove('hidden');
+                btnCheckout.disabled = true;
+                btnCheckout.className = "w-full py-3 bg-slate-300 text-slate-500 font-bold rounded-lg text-sm transition-all cursor-not-allowed flex justify-center items-center gap-2 shadow-sm";
+            } else if (checkboxes.length > 0) {
+                conflictAlert.classList.add('hidden');
+                btnCheckout.disabled = false;
+                btnCheckout.className = "w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm transition-all flex justify-center items-center gap-2 shadow-sm cursor-pointer";
+            } else {
+                conflictAlert.classList.add('hidden');
+                btnCheckout.disabled = true;
+                btnCheckout.className = "w-full py-3 bg-slate-300 text-slate-500 font-bold rounded-lg text-sm transition-all cursor-not-allowed flex justify-center items-center gap-2 shadow-sm";
+            }
+
+            selectAll.checked = (checkboxes.length === totalPoCount);
+        }
+
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.po-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+            validateSelections();
+        }
+
+        function handleCheckoutProcess() {
+            alert('Mengarahkan ke Halaman Checkout dengan parameter Bank & PO terpilih...');
+        }
+
+        // Filter / Clean Cart Simulation
+        function cleanCart(removeType) {
+            if (removeType === 'non-banpem') {
+                const nonBanpem = document.getElementById('filter-item-2');
+                if (nonBanpem) nonBanpem.remove();
+                alert('Semua produk non-Banpem berhasil dihapus dari keranjang.');
+            } else {
+                const banpem = document.getElementById('filter-item-1');
+                if (banpem) banpem.remove();
+                alert('Semua produk Banpem berhasil dihapus dari keranjang.');
+            }
+        }
+
+        function removeItem(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        // PDP Pricing & Stepper
+        const pdpUnitPrice = 125000;
+        let currentPdpImg = 'prod1';
+        const prodImgSrc = 'buku_panduan_menulis_banpem.svg';
+        const suratDukunganSrc = 'surat_dukungan_siaspri.svg';
+
+        function calculatePdpTotal(qty) {
+            let val = parseInt(qty) || 1;
+            if (val < 1) val = 1;
+            const total = val * pdpUnitPrice;
+            const el = document.getElementById('pdp-total-price');
+            if (el) el.innerText = 'Rp' + total.toLocaleString('id-ID');
+        }
+
+        function stepPdpQty(delta) {
+            const input = document.getElementById('pdp-quantity-input');
+            if (!input) return;
+            let val = parseInt(input.value) || 1;
+            val += delta;
+            if (val < 1) val = 1;
+            if (val > 10000) val = 10000;
+            input.value = val;
+            calculatePdpTotal(val);
+        }
+
+        // PDP Gallery Switcher
+        function selectPdpImage(type) {
+            currentPdpImg = type;
+            const mainImg = document.getElementById('pdp-main-img');
+            const thumb1 = document.getElementById('thumb-prod-1');
+            const thumb2 = document.getElementById('thumb-prod-2');
+            if (type === 'prod1') {
+                if (mainImg) mainImg.src = prodImgSrc;
+                if (thumb1) thumb1.className = "border-2 border-[#e02020] rounded-lg p-2 bg-white cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center";
+                if (thumb2) thumb2.className = "border-2 border-slate-200 hover:border-emerald-500 rounded-lg p-2 bg-emerald-50/50 cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center relative group";
+            } else {
+                if (mainImg) mainImg.src = suratDukunganSrc;
+                if (thumb2) thumb2.className = "border-2 border-emerald-500 rounded-lg p-2 bg-emerald-50/50 cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center relative group shadow-sm";
+                if (thumb1) thumb1.className = "border-2 border-slate-200 hover:border-[#e02020] rounded-lg p-2 bg-white cursor-pointer transition-all hover:shadow-md flex flex-col items-center text-center";
+            }
+        }
+
+        function handleMainImageClick() {
+            openLightbox();
+        }
+
+        // PDP Lightbox Controls
+        function openLightbox() {
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // PDP Add to Cart Simulation
+        function simulatedAddToCart(type) {
+            document.getElementById('add-to-cart-modal').classList.remove('hidden');
+        }
+
+        function closeAddToCartModal() {
+            document.getElementById('add-to-cart-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
